@@ -1,2 +1,2 @@
 microservices:
-  coffee: "http://coffee:8080/coffee"
+  coffee: "http://coffee-scst-source:8080/coffee"
