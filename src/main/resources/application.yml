@@ -24,7 +24,7 @@ spring:
 
       routes:
         - id: coffee
-          uri: ${microservices.coffee}
+          uri: ${microservices.coffee}/{segment}
           predicates:
             - Path=/api/coffee/{segment}
           filters:
@@ -34,5 +34,3 @@ spring:
                 fallbackUri: forward:/api/fallback/greeting
 
 
-microservices:
-  coffee: "http://localhost:8081/coffee"
