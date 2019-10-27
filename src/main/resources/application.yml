@@ -1,0 +1,38 @@
+server:
+  port: ${PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: DEBUG
+
+spring:
+  application:
+    name: spring-microservices-gateway
+  cloud:
+    gateway:
+      # See route spec here:
+      # https://github.com/spring-cloud/spring-cloud-gateway/blob/master/docs/src/main/asciidoc/spring-cloud-gateway.adoc
+
+      routes:
+        - id: coffee
+          uri: ${microservices.coffee}
+          predicates:
+            - Path=/api/coffee/{segment}
+          filters:
+            - name: Hystrix
+              args:
+                name: coffeeFallback
+                fallbackUri: forward:/api/fallback/greeting
+
+
+microservices:
+  coffee: "http://localhost:8081/coffee"
